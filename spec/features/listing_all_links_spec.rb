@@ -12,3 +12,4 @@ feature "User browses the list of links" do
 		expect(page).to have_content("Makers Academy")
 	end
 end
+

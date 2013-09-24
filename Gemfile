@@ -19,4 +19,8 @@ group :development, :test do
 	gem "cucumber"
 	gem "capybara"
 	gem "database_cleaner"
+	gem "guard"
+	gem "guard-cucumber"
+	gem "guard-rspec"
+	gem "terminal-notifier-guard"
 end

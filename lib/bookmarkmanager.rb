@@ -2,7 +2,7 @@ require 'sinatra/base'
 
 class Bookmarkmanager < Sinatra::Base
   get '/' do
-    'Hello Bookmarkmanager!'
+    'Hello Bookmark Manager!'
   end
 
   # start the server if ruby file executed directly
