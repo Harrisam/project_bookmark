@@ -24,4 +24,11 @@ class Bookmarkmanager < Sinatra::Base
 
   # start the server if ruby file executed directly
   run! if app_file == $0
+
+  post '/links' do  
+  	url = params["url"]
+  	title = params["title"]
+  	Link.create(:url => url, :title => title)
+  	redirect to('/')
+  end
 end
