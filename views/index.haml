@@ -1,0 +1,11 @@
+!!!
+%html
+	%body
+		%h1 Welcome to Links.&#1071;.us 
+		%section
+			%ul
+				- @links.each do |link|
+					%li 
+						%a{ href: link.url }= link.title
+			 
+			
