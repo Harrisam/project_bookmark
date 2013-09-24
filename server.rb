@@ -1,4 +1,5 @@
 require 'data_mapper'
+require 'sinatra'
 
 env = ENV["RACK_ENV"] || "development"
 #we're telling datamapper to use a postgres database on localhost. The name will be "bookmark_manager_test" depending on the environment

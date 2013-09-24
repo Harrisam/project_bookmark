@@ -1,3 +1,4 @@
+
 # A Gemfile
 source "https://rubygems.org"
 
@@ -17,4 +18,5 @@ group :development, :test do
 	gem "rspec"
 	gem "cucumber"
 	gem "capybara"
+	gem "database_cleaner"
 end
