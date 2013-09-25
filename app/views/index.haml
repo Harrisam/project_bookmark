@@ -1,0 +1,16 @@
+
+%section
+	%ul
+		- @links.each do |link|
+			%li 
+				%a{ href: link.url }= link.title
+#new-link
+	%form{ action: '/links', method: 'post'}
+		Url: 
+		%input{ type: 'text', name: 'url' }
+		Title:
+		%input{ type: 'text', name: 'title' }
+		%input{ type: 'submit', value: 'Add link' }
+		Tags:
+		%input{ type: 'text', name: 'tags' }
+	

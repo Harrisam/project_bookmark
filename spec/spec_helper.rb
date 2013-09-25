@@ -5,7 +5,7 @@ ENV['RACK_ENV'] = 'test' # because we need to know what database to work with
 #because the server needs to know
 #what envirnment it's running it: test or development.
 #The environment determines what database to use.
-require './lib/bookmarkmanager'
+require './app/bookmarkmanager'
 require 'capybara/rspec'
 require 'database_cleaner'
 

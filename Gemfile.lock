@@ -1,6 +1,5 @@
 GEM
   remote: https://rubygems.org/
-  remote: https://rubygems.org/
   specs:
     addressable (2.3.5)
     bcrypt-ruby (3.1.2)
@@ -153,6 +152,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  bcrypt-ruby
   capybara
   cucumber
   cucumber-sinatra

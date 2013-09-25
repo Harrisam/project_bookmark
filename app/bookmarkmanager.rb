@@ -7,9 +7,10 @@ env = ENV["RACK_ENV"] || "development"
 #we're telling datamapper to use a postgres database on localhost. The name will be "bookmark_manager_test" depending on the environment
 DataMapper.setup(:default, "postgres://localhost/bookmark_manager_#{env}")
 
-require_relative 'link' #this needs to be done after datamapper is initialised
-require_relative 'tag'
-require_relative 'user'
+require './lib/link' #this needs to be done after datamapper is initialised
+require './lib/tag'
+require './lib/user'
+require_relative 'helpers/application'
 #after declaring you models, you should finalise them
 DataMapper.finalize
 
@@ -17,7 +18,9 @@ DataMapper.finalize
 DataMapper.auto_upgrade!
 
 class Bookmarkmanager < Sinatra::Base
-	set :views, File.join(File.dirname(__FILE__), '..', 'views')
+	enable :sessions
+  set :session_secret, 'super secret'
+  #set :views, File.join(File.dirname(__FILE__), '..', 'views')
 
   get '/' do
     @links = Link.all  
@@ -30,17 +33,13 @@ class Bookmarkmanager < Sinatra::Base
     haml :index
   end
 
-  get '/user/new' do  
+  get '/users/new' do  
     # note the view is in views/users/new.erb
     # we need the quotes because otherwise
     # ruby would divide the symbol :users by the
     # variable new (which makes no sense)
-    haml :"user/new"
+    haml :"/users/new"
   end
-
-
-  # start the server if ruby file executed directly
-  run! if app_file == $0
 
   post '/links' do  
   	url = params["url"]
@@ -53,4 +52,16 @@ class Bookmarkmanager < Sinatra::Base
   	Link.create(:url => url, :title => title, :tags => tags)
   	redirect to('/')
   end
+
+  post '/users' do
+    User.create(:email => params[:email],
+                :password => params[:password])
+    session[:user_id] = user.id 
+    redirect to('/')
+  end
+
+
+
+  # start the server if ruby file executed directly
+  run! if app_file == $0
 end

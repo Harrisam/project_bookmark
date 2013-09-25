@@ -2,13 +2,12 @@
 # A Gemfile
 source "https://rubygems.org"
 
-source "https://rubygems.org"
-
 ruby '2.0.0'
 
 gem "sinatra"
 gem "haml"
 gem "sass"
+gem "bcrypt-ruby"
 
 group :development, :test do  
 	gem "cucumber-sinatra"

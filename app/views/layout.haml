@@ -1,0 +1,9 @@
+!!!
+%html
+	%head
+		%title Bookmark Manager
+	%body
+		%h1 Welcome to Links.&#1071;.us
+		- if current_user
+			Welcome, = current_user.email
+		= yield
