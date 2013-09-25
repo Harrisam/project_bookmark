@@ -2,6 +2,14 @@
 %html
 	%body
 		%h1 Welcome to Links.&#1071;.us 
+		%h2 Please sign up
+		%form{ action: '/user', method: 'post'}
+			Email:
+			%input{ name: 'email', type: 'text' }
+			Password:
+			%input{ name: 'password', type: 'password' }
+			%input{ type: 'submit', value: 'Sign up' }
+
 		%section
 			%ul
 				- @links.each do |link|
