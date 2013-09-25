@@ -57,7 +57,7 @@ class Bookmarkmanager < Sinatra::Base
   post '/users' do
     User.create(:email => params[:email],
                 :password => params[:password])
-    session[:user_id] = user.id 
+    session[:user_id] = User.id 
     redirect to('/')
   end
 
