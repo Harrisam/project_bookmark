@@ -19,8 +19,14 @@ class Bookmarkmanager < Sinatra::Base
 
   get '/' do
     @links = Link.all  
-	haml :index
-    end
+    haml :index
+  end
+
+  get '/tags/:text' do  
+    tag = Tag.first(:text => params[:text])
+    @links = tag ? tag.links : []
+    haml :index
+  end
 
   # start the server if ruby file executed directly
   run! if app_file == $0
