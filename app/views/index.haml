@@ -1,9 +1,13 @@
-
+- if current_user
+	Welcome,
+	= @current_user.email
+%h1 Welcome to Links.&#1071;.us, the only Bookmark Manager worth knowing ;)
 %section
+	%h3 Current links:
 	%ul
 		- @links.each do |link|
 			%li 
-				%a{ href: link.url }= link.title
+				%a{ href: link.url } = link.title
 #new-link
 	%form{ action: '/links', method: 'post'}
 		Url: 
