@@ -2,12 +2,14 @@ require 'sinatra/base'
 require 'haml'
 require 'data_mapper'
 
+
 env = ENV["RACK_ENV"] || "development"
 #we're telling datamapper to use a postgres database on localhost. The name will be "bookmark_manager_test" depending on the environment
 DataMapper.setup(:default, "postgres://localhost/bookmark_manager_#{env}")
 
 require_relative 'link' #this needs to be done after datamapper is initialised
 require_relative 'tag'
+require_relative 'user'
 #after declaring you models, you should finalise them
 DataMapper.finalize
 
@@ -27,6 +29,15 @@ class Bookmarkmanager < Sinatra::Base
     @links = tag ? tag.links : []
     haml :index
   end
+
+  get '/user/new' do  
+    # note the view is in views/users/new.erb
+    # we need the quotes because otherwise
+    # ruby would divide the symbol :users by the
+    # variable new (which makes no sense)
+    haml :"user/new"
+  end
+
 
   # start the server if ruby file executed directly
   run! if app_file == $0
