@@ -20,6 +20,7 @@ DataMapper.auto_upgrade!
 class Bookmarkmanager < Sinatra::Base
 	enable :sessions
   set :session_secret, 'super secret'
+  helpers ApplicationHelpers
   #set :views, File.join(File.dirname(__FILE__), '..', 'views')
 
   get '/' do
