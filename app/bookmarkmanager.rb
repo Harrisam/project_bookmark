@@ -44,6 +44,7 @@ class Bookmarkmanager < Sinatra::Base
     # we need the quotes because otherwise
     # ruby would divide the symbol :users by the
     # variable new (which makes no sense)
+    @user = User.new
     haml :"/users/new"
   end
 
@@ -60,11 +61,19 @@ class Bookmarkmanager < Sinatra::Base
   end
 
   post '/users' do
-    user = User.create(:email => params[:email],
+    #we just initialize the object
+    #without saving it. It may be invalid
+    @user = User.new(:email => params[:email],
                 :password => params[:password],
                 :password_confirmation => params[:password_confirmation])
-    session[:user_id] = user.id 
-    redirect to('/')
+    if @user.save
+      session[:user_id] = @user.id 
+      redirect to('/')
+    else
+      flash[:notice] = "Sorry, your passwords don't match"
+      haml :"users/new"
+    end
+
   end
 
 

@@ -1,8 +1,6 @@
 require 'bcrypt'
 
 class User
-	attr_reader :password
-	attr_accessor :password_confirmation
 
 	include DataMapper::Resource
 
@@ -14,12 +12,16 @@ class User
   	# and it's not enough for the hash and salt
   	property :password_digest, Text
 
+	attr_reader :password
+	attr_accessor :password_confirmation
+	
   	#this is datamapper's methos of validating the model.
   	#the model will not be saved unless both password
   	#and password_confirmation are the same
   	#read more about it in the documentation
   	#http://datamapper.org/docs/validations.html
   	validates_confirmation_of :password
+
 
 	  # when assigned the password, we don't store it directly
 	  # instead, we generate a password digest, that looks like this:
