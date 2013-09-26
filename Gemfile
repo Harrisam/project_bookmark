@@ -8,6 +8,7 @@ gem "sinatra"
 gem "haml"
 gem "sass"
 gem "bcrypt-ruby"
+gem "rack-flash3"
 
 group :development, :test do  
 	gem "cucumber-sinatra"

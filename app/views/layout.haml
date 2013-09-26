@@ -3,4 +3,13 @@
 	%head
 		%title Bookmark Manager
 	%body
+		- if flash[:notice]
+			#notice
+				= flash[:notice]
+		- if flash[:errors] and !flash[:errors].empty?
+			#errors
+				Sorry, there were the following problems:
+				%ul
+					- flash[:errors].each do |error|
+						%li= error
 		= yield

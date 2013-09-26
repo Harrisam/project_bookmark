@@ -1,7 +1,7 @@
 require 'sinatra/base'
 require 'haml'
 require 'data_mapper'
-
+require 'rack-flash'
 
 env = ENV["RACK_ENV"] || "development"
 #we're telling datamapper to use a postgres database on localhost. The name will be "bookmark_manager_test" depending on the environment
@@ -10,16 +10,21 @@ DataMapper.setup(:default, "postgres://localhost/bookmark_manager_#{env}")
 require './lib/link' #this needs to be done after datamapper is initialised
 require './lib/tag'
 require './lib/user'
-require_relative 'helpers/application'
+
 #after declaring you models, you should finalise them
 DataMapper.finalize
 
 #however, how database tables don't exist yet. Let's tell datamapper to creat them.
 DataMapper.auto_upgrade!
 
+require_relative 'helpers/application'
+
 class Bookmarkmanager < Sinatra::Base
 	enable :sessions
   set :session_secret, 'super secret'
+
+  use Rack::Flash
+
   helpers ApplicationHelpers
   #set :views, File.join(File.dirname(__FILE__), '..', 'views')
 
@@ -56,7 +61,8 @@ class Bookmarkmanager < Sinatra::Base
 
   post '/users' do
     user = User.create(:email => params[:email],
-                :password => params[:password])
+                :password => params[:password],
+                :password_confirmation => params[:password_confirmation])
     session[:user_id] = user.id 
     redirect to('/')
   end
