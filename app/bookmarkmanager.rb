@@ -6,6 +6,7 @@ require './lib/link' #this needs to be done after datamapper is initialised
 require './lib/tag'
 require './lib/user'
 
+require_relative 'data_mapper_setup'
 require_relative 'helpers/application'
 
 class Bookmarkmanager < Sinatra::Base
