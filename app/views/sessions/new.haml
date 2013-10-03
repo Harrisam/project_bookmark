@@ -5,4 +5,9 @@
 	Password:
 	%input{ name: 'password', type: 'password' }
 	%input{ type: 'submit', value: 'Sign in' }
-	
+%br
+
+Forgotten Password:
+%form{ action: '/reset_password', method: 'post' }
+	%input{ name: 'reset_email', type: 'text' }
+	%input{ type: 'submit', value: 'Forgotten password'}

@@ -39,7 +39,9 @@ class Bookmarkmanager < Sinatra::Base
     haml :"/users/new"
   end
 
-  get '/sessions/new' do  
+  get '/sessions/new' do
+
+    # flash.now[:notice] = "Reset password link sent" 
     haml :"sessions/new"
   end
 
@@ -82,9 +84,57 @@ class Bookmarkmanager < Sinatra::Base
     end
   end
 
+  post '/reset_password' do
+    email = params[:reset_email]
+    user = User.first(:email => email)
+
+    if !user
+      flash[:error] = "Email address not found!"
+      redirect to('/')
+    end
+
+    user.reset_password_token = Array.new(64) {(65 +rand(58)).chr}.join
+    user.reset_password_token_timestamp = Time.now
+    user.save
+
+    # send email + token
+    flash[:notice] = 'Reset password link sent'
+    redirect to('/sessions/new')
+  end
+
+  get '/reset_password/:token' do
+    user = User.first(:reset_password_token => params[:token])
+
+    if !user
+      flash[:errors] = ["Token Not found"]
+      redirect to('/')
+    end
+
+    time_limit = (Time.now - 60*60).to_datetime
+    timestamp = user.reset_password_token_timestamp 
+
+    if (time_limit) < timestamp
+      @token = params[:token]
+      haml :reset_password
+    else
+      flash[:errors] = ["Token to old, try again..."]
+    end
+  end
+
+  post '/reset_password/:token' do 
+    password = params[:password]
+    password_confirmation = params[:password_confirmation]
+    user = User.first(:reset_password_token => params[:token])    
+    user.password = password
+    user.password_confirmation = password_confirmation
+    flash[:notice] = "Password successfully changed"
+    redirect to("/")
+  end
+
+
   delete '/sessions' do
     session[:user_id] = nil
-    flash[:notice] = ["Good bye!"]
+    flash[:notice] = "Good bye!"
     redirect to('/')
   end
 

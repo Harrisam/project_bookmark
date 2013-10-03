@@ -11,6 +11,9 @@ class User
   	# 50 characters by default
   	# and it's not enough for the hash and salt
   	property :password_digest, Text
+  	property :reset_password_token, Text
+  	property :reset_password_token_timestamp, DateTime
+
 
 	attr_reader :password
 	attr_accessor :password_confirmation
