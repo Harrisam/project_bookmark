@@ -12,4 +12,8 @@
 				%ul
 					- flash[:errors].each do |error|
 						%li= error
+		- if current_user
+			%form{ method: 'post',  action: '/sessions' }
+				%input{ type: 'hidden', name: '_method', value: 'delete' }
+				%input{ type: 'submit', value: 'Sign out'}
 		= yield
